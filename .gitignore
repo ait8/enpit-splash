@@ -1,3 +1,8 @@
+# Setting JSONs
+config/slack.json
+config/mentors.json
+config/teams.json
+
 # Logs
 logs
 *.log
