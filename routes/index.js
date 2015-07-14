@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-var mentors = require("../config/mentors.json"),
+var keywords = require("../config/keywords.json"),
     teams = require("../config/teams.json");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { mentors :  mentors, teams : teams});
+  res.render('index', { mentors :  keywords, teams : teams});
 });
 
 module.exports = router;
