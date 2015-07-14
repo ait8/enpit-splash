@@ -1,6 +1,6 @@
 # Setting JSONs
 config/slack.json
-config/mentors.json
+config/keywords.json
 config/teams.json
 
 # Logs
@@ -30,3 +30,6 @@ build/Release
 # Dependency directory
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
+
+# module-cache created by react-tools. (furuya-s)
+public/javascripts/build/.module-cache

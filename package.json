@@ -14,5 +14,8 @@
     "morgan": "~1.6.1",
     "request": "^2.58.0",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "react-tools": "^0.13.3"
   }
 }
