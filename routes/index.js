@@ -6,7 +6,7 @@ var keywords = require("../config/keywords.json"),
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { mentors :  keywords, teams : teams});
+  res.render('index', { keywords :  keywords, teams : teams});
 });
 
 module.exports = router;
