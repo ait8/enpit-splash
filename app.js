@@ -25,6 +25,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/bells', bells);
 
+// Load setting JSONs
+var slack = require("./config/slack.json"),
+    mentors = require("./config/mentors.json"),
+    teams = require(".config/teams.json");
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
