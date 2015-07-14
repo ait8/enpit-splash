@@ -1,4 +1,6 @@
 {
-    "slack_token" : "",
-    "post_channel" : ""
+    "url" : "",
+    "channel" : "",
+    "username" : "",
+    "icon" : ""
 }
