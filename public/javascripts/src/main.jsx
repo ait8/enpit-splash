@@ -1,7 +1,7 @@
 var React = require('react');
-var HelloWorld = require('./HelloWorld.jsx');
+var Bell = require('./bell.jsx');
 
 React.render(
-    <HelloWorld />,
+    <Bell />,
     document.getElementById('main')
 );
