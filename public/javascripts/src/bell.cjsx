@@ -5,17 +5,17 @@ BellButton   = require './bell-button.cjsx'
 module.exports = React.createClass
     getInitialState: ->
         keywords: ""
-    onChangeKeywords: (keywords)->
-        this.setState
-            keywords: keywords
+    onChangeKeywords: (ks)->
+        @setState
+            keywords: ks
     sendMessage: ->
-        unless this.state.keywords is ''
+        unless @state.keywords is ''
             $.get './bells',
-                keywords: this.state.keywords
+                keywords: @state.keywords
     render: ->
         <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--4-col">
-                <BellKeywords onChangeKeywords={this.onChangeKeywords} /><br />
-                <BellButton sendMessage={this.sendMessage} />
+                <BellKeywords onChangeKeywords={@onChangeKeywords} /><br />
+                <BellButton sendMessage={@sendMessage} />
             </div>
         </div>

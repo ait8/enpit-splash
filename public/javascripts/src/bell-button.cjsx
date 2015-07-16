@@ -2,8 +2,8 @@ React = require 'react'
 
 module.exports = React.createClass
     onClick: ->
-        this.props.sendMessage()
+        @props.sendMessage()
     render: ->
-        <button onClick={this.onClick} className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
+        <button onClick={@onClick} className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
             SEND
         </button>
