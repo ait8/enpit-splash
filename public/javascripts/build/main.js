@@ -19809,23 +19809,97 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":29}],157:[function(require,module,exports){
-var React = require('react');
+var React;
+
+React = require('react');
 
 module.exports = React.createClass({displayName: "exports",
-    render : function() {
-        return (
-            React.createElement("h1", null, "Hello, world from a React.js Component!")
-        )
-    }
+  onClick: function() {
+    return this.props.sendMessage();
+  },
+  render: function() {
+    return React.createElement("button", {
+      "onClick": this.onClick,
+      "className": "mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"
+    }, "SEND");
+  }
 });
 
+
 },{"react":156}],158:[function(require,module,exports){
-var React = require('react');
-var HelloWorld = require('./HelloWorld.jsx');
+var React;
 
-React.render(
-    React.createElement(HelloWorld, null),
-    document.getElementById('main')
-);
+React = require('react');
 
-},{"./HelloWorld.jsx":157,"react":156}]},{},[158]);
+module.exports = React.createClass({displayName: "exports",
+  handleChange: function(e) {
+    return this.props.onChangeKeywords(e.target.value);
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "mdl-textfield mdl-js-textfield textfield-demo"
+    }, React.createElement("input", {
+      "onChange": this.handleChange,
+      "className": "mdl-textfield__input",
+      "text": "text",
+      "id": "keywords"
+    }), React.createElement("label", {
+      "className": "mdl-textfield__label",
+      "htmlFor": "keywords"
+    }, "keywords..."));
+  }
+});
+
+
+},{"react":156}],159:[function(require,module,exports){
+var BellButton, BellKeywords, React;
+
+React = require('react');
+
+BellKeywords = require('./bell-keywords.cjsx');
+
+BellButton = require('./bell-button.cjsx');
+
+module.exports = React.createClass({displayName: "exports",
+  getInitialState: function() {
+    return {
+      keywords: ""
+    };
+  },
+  onChangeKeywords: function(keywords) {
+    return this.setState({
+      keywords: keywords
+    });
+  },
+  sendMessage: function() {
+    if (this.state.keywords !== '') {
+      return $.get('./bells', {
+        keywords: this.state.keywords
+      });
+    }
+  },
+  render: function() {
+    return React.createElement("div", {
+      "className": "mdl-grid"
+    }, React.createElement("div", {
+      "className": "mdl-cell mdl-cell--4-col"
+    }, React.createElement(BellKeywords, {
+      "onChangeKeywords": this.onChangeKeywords
+    }), React.createElement("br", null), React.createElement(BellButton, {
+      "sendMessage": this.sendMessage
+    })));
+  }
+});
+
+
+},{"./bell-button.cjsx":157,"./bell-keywords.cjsx":158,"react":156}],160:[function(require,module,exports){
+var Bell, React;
+
+React = require('react');
+
+Bell = require('./bell.cjsx');
+
+React.render(React.createElement(Bell, null), document.getElementById('main'));
+
+
+},{"./bell.cjsx":159,"react":156}]},{},[160]);
