@@ -5,5 +5,5 @@ enPiT Splash
 ```
 % cd enpit-splash
 % npm install
-% set DEBUG=enpit-bell & node bin/www
+% npm start
 ```
