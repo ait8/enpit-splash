@@ -1,10 +1,18 @@
 React        = require 'react'
+Mui          = require 'material-ui'
+
 BellKeywords = require './bell-keywords.cjsx'
 BellButton   = require './bell-button.cjsx'
+
+ThemeManager = new Mui.Styles.ThemeManager()
 
 module.exports = React.createClass
     getInitialState: ->
         keywords: ""
+    getChildContext: ->
+        muiTheme : ThemeManager.getCurrentTheme()
+    childContextTypes:
+        muiTheme : React.PropTypes.object
     onChangeKeywords: (ks)->
         @setState
             keywords: ks
