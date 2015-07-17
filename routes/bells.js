@@ -3,6 +3,15 @@ var request = require("request");
 var slack = require("../config/slack.json");
 var router = express.Router();
 
+var apns = require('apn');
+var apn_options = {
+  cert    : "./config/splash-cert.pem",
+  key     : "./config/splash-noenc.pem",
+  gateway : "gateway.sandbox.push.apple.com",
+  port    : 2195
+};
+var apnConnection = new apns.Connection(apn_options);
+
 router.get('/', function(req, res, next) {
   if (!req.query.keywords) {
     res.status(400);
@@ -11,6 +20,21 @@ router.get('/', function(req, res, next) {
   }
 
   var keywords = req.query.keywords;
+
+  var IOSToken = require('../models/iostokens');
+  IOSToken.findAll(function(result){
+    result.forEach(function(token) {
+      var device = new apns.Device(token.token);
+      var note = new apns.Notification();
+      note.alert = "次のキーワードに関して参加者がヘルプを求めています 「" + keywords + "」";
+      note.payload = {keyword: keywords, team: "Test team"};
+      apnConnection.pushNotification(note, device);
+    });
+  }, function(err, result){
+    console.log(err);
+  });
+
+
   request.post({
     url: slack.url,
     form: {
@@ -27,8 +51,8 @@ router.get('/', function(req, res, next) {
     }
     console.log(body);
   });
-  res.status(200);
-  res.send({message: "Send Bell"});
+
+  res.status(200).send({message: "Send Bell"});
 });
 
 module.exports = router;
