@@ -9,6 +9,7 @@ var routes = require('./routes/index');
 var bells = require('./routes/bells');
 var teams = require('./routes/teams');
 var keywords = require('./routes/keywords');
+var iostokens = require('./routes/iostokens');
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use('/', routes);
 app.use('/bells', bells);
 app.use('/teams', teams);
 app.use('/keywords', keywords);
+app.use('/iostokens', iostokens);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
