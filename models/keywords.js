@@ -21,7 +21,7 @@ var Keyword = (function() {
 
   _Keyword.findAll = function(success, fail) {
     var keywordsQuery = KeywordModel.where({});
-    keywordsQuery.find().lean().exec(function(err, result) {
+    keywordsQuery.find().select('name send_count').lean().exec(function(err, result) {
       if (err) {
         fail(err, result);
         return;
