@@ -1,22 +1,15 @@
-var mongoose = require('mongoose'),
+var mongoose =  require('./models'),
     Schema = mongoose.Schema;
 
 var KeywordSchema = new Schema({
   name       : String,
   send_count : Number
 });
-mongoose.model('Keyword', KeywordSchema);
-var KeywordModel;
 
-mongoose.connect('mongodb://localhost/enpit-splash');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('Connected to "enpit-splash" database');
-  KeywordModel = mongoose.model('Keyword');
-});
+var KeywordModel = mongoose.model('Keyword', KeywordSchema);
 
 var Keyword = (function() {
+  // var KeywordModel = require('./models').KeywordModel;
   var _Keyword = {};
 
   _Keyword.findAll = function(success, fail) {
