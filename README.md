@@ -1,5 +1,5 @@
-enPiT Splash
-==============
+#enPiT Splash
+=====
 
 # 実行方法
 ```
@@ -31,3 +31,7 @@ enPiT Splash
     "icon" : ":innocent:"
 }
 ```
+
+======
+This software is released under the MIT License, see LICENSE.txt.
+
