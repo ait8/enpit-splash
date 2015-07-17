@@ -10,8 +10,15 @@ module.exports = React.createClass
             keywords: ks
     sendMessage: ->
         unless @state.keywords is ''
-            $.get './bells',
-                keywords: @state.keywords
+            $.ajax
+                type : 'GET'
+                url  : './bells'
+                data :
+                    keywords : @state.keywords
+                success : (data, dataType)->
+                    swal('送信完了！', 'メンターにメッセージを送信しました。', 'success')
+                error : (XMLHttpRequest, textStatus, errorThrown)->
+                    swal('エラー！', '送信エラーです。', 'error')
     render: ->
         <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--4-col">
