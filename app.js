@@ -4,8 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var injectTapEventPlugin = require('react-tap-event-plugin');
-
 
 var routes = require('./routes/index');
 var bells = require('./routes/bells');
@@ -64,10 +62,5 @@ app.use(function(err, req, res, next) {
   });
 });
 
-//Needed for onTouchTap
-//Can go away when react 1.0 release
-//Check this repo:
-//https://github.com/zilverline/react-tap-event-plugin
-injectTapEventPlugin();
 
 module.exports = app;
