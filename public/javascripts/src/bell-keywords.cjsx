@@ -7,6 +7,4 @@ module.exports = React.createClass
     handleChange: (e)->
         @props.onChangeKeywords(e.target.value)
     render: ->
-        <div className="mdl-textfield mdl-js-textfield textfield-demo">
-            <TextField onChange={@handleChange} hintText="keywords..." />
-        </div>
+        <TextField onChange={@handleChange} hintText="keywords..." />
