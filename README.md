@@ -1,7 +1,16 @@
 #enPiT Splash
 =====
+# 要求アプリケーション
+* Node.js
+* MongoDB
 
 # 実行方法
+1. 予め別のコンソールでMongoDBを実行しておく。
+```
+% mongod --dbpath <database-path>
+```
+
+2. アプリケーションを実行
 ```
 % cd enpit-splash
 % npm install
@@ -34,4 +43,3 @@
 
 ======
 This software is released under the MIT License, see LICENSE.txt.
-
