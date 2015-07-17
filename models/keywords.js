@@ -9,7 +9,6 @@ var KeywordSchema = new Schema({
 var KeywordModel = mongoose.model('Keyword', KeywordSchema);
 
 var Keyword = (function() {
-  // var KeywordModel = require('./models').KeywordModel;
   var _Keyword = {};
 
   _Keyword.findAll = function(success, fail) {
