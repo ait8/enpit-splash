@@ -12,7 +12,7 @@ module.exports = React.createClass
         change = {}
         change[name] = e.target.value
         @setState change
-        # @props.onChangeTeam(e.target.value)
+        @props.onChangeTeam(e.target.value.text)
     componentWillMount: ->
         that = @
         $.get './teams', (data)->
