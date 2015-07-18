@@ -19,12 +19,6 @@ module.exports = React.createClass
             that.setState
                 teams : data
     render: ->
-        options = @state.teams.map (team) -> 
-            <option value={team} key={team}>{team}</option>
-        <div>
-        <select multiple={true}>
-            {options}
-        </select>
         <SelectField
             value={@state.selectValue}
             onChange={@onChange.bind(null, 'selectValue')}
