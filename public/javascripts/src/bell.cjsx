@@ -26,7 +26,7 @@ module.exports = React.createClass
         if @state.team is ''
             swal('エラー！', 'チーム名を選択して下さい。', 'error')
         else if @state.keyword is ''
-            swal('エラー！', 'メッセージを入力して下さい。', 'error')
+            swal('エラー！', 'メッセージを選択して下さい。', 'error')
         else
             $.ajax
                 type : 'GET'
