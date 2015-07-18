@@ -1,9 +1,10 @@
 React = require 'react'
+Mui   = require 'material-ui'
+
+RaisedButton = Mui.RaisedButton
 
 module.exports = React.createClass
     onClick: ->
         @props.sendMessage()
     render: ->
-        <button onClick={@onClick} className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
-            SEND
-        </button>
+        <RaisedButton onClick={@onClick} label="SEND" secondary={true} />
