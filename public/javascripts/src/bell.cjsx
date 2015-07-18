@@ -9,40 +9,30 @@ ThemeManager = new Mui.Styles.ThemeManager()
 
 module.exports = React.createClass
     getInitialState: ->
-        keywords: ""
-        teams: []
+        keyword: ""
+        team: ""
         selectedTeam: undefined
     getChildContext: ->
         muiTheme : ThemeManager.getCurrentTheme()
     childContextTypes:
         muiTheme : React.PropTypes.object
-    componentDidMount: ->
-        # dummy
+    onChangeTeam: (t)->
         @setState
-            teams: [
-              {
-                name : "aaa"
-              }
-            ]
-        # $.get './teams', (data)->
-        #     @setState
-        #         teams: data
-    onChangeTeam: (selectedIndex)->
-        alert(selectedIndex)
-    onChangeKeywords: (ks)->
+            team: t
+    onChangeKeyword: (k)->
         @setState
-            keywords: ks
+            keyword: k
     sendMessage: ->
-        if @state.selectedTeam is undefined
+        if @state.team is ''
             swal('エラー！', 'チーム名を選択して下さい。', 'error')
-        else if @state.keywords is ''
+        else if @state.keyword is ''
             swal('エラー！', 'メッセージを入力して下さい。', 'error')
         else
             $.ajax
                 type : 'GET'
                 url  : './bells'
                 data :
-                    keywords : @state.keywords
+                    keyword : @state.keyword
                 success : (data, dataType)->
                     swal('送信完了！', 'メンターにメッセージを送信しました。', 'success')
                 error : (XMLHttpRequest, textStatus, errorThrown)->
@@ -50,8 +40,8 @@ module.exports = React.createClass
     render: ->
         <div className="mdl-grid">
             <div className="mdl-cell mdl-cell--4-col">
-                <BellTeamSelector teams={@state.teams} onChangeTeam={@onChangeTeam} /><br />
-                <BellKeywords onChangeKeywords={@onChangeKeywords} /><br />
+                <BellTeamSelector onChangeTeam={@onChangeTeam} /><br />
+                <BellKeywords onChangeKeyword={@onChangeKeyword} /><br />
                 <BellButton sendMessage={@sendMessage} />
             </div>
         </div>
