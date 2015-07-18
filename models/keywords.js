@@ -2,7 +2,7 @@ var mongoose =  require('./models'),
     Schema = mongoose.Schema;
 
 var KeywordSchema = new Schema({
-  name       : String,
+  text       : String,
   send_count : Number
 });
 
@@ -13,7 +13,7 @@ var Keyword = (function() {
 
   _Keyword.findAll = function(success, fail) {
     var keywordsQuery = KeywordModel.where({});
-    keywordsQuery.find().select('name send_count').lean().exec(function(err, result) {
+    keywordsQuery.find().select('text send_count').lean().exec(function(err, result) {
       if (err) {
         fail(err, result);
         return;
