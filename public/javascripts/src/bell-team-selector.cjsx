@@ -24,4 +24,3 @@ module.exports = React.createClass
             onChange={@onChange.bind(null, 'selectValue')}
             hintText="Hint Text"
             menuItems={@state.teams} />
-        </div>
