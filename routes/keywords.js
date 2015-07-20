@@ -20,7 +20,7 @@ router.post('/', function(req, res, next) {
 
   var keyword = req.body.keyword;
   Keyword.addKeyword(
-    {name: keyword, send_count: 0},
+    {text: keyword, send_count: 0},
     function() {
       res.status('201').send({});
     }, function(err) {
