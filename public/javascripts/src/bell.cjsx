@@ -39,7 +39,8 @@ module.exports = React.createClass
                 type : 'GET'
                 url  : './bells'
                 data :
-                    keywords : @state.keyword
+                    keywords : @state.keyword,
+                    team : @state.team
                 success : (data, dataType)->
                     swal('送信完了！', 'メンターにメッセージを送信しました。', 'success')
                 error : (XMLHttpRequest, textStatus, errorThrown)->
