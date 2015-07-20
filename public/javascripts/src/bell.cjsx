@@ -1,9 +1,10 @@
-React    = require 'react'
-Mui      = require 'material-ui'
+React = require 'react'
+Mui   = require 'material-ui'
 
-BellKeywords   = require './bell-keywords.cjsx'
-BellButton     = require './bell-button.cjsx'
+BellKeywords     = require './bell-keywords.cjsx'
+BellButton       = require './bell-button.cjsx'
 BellTeamSelector = require './bell-team-selector.cjsx'
+Logo             = require './logo.cjsx'
 
 Paper = Mui.Paper
 
@@ -52,6 +53,7 @@ module.exports = React.createClass
       <div className="mdl-cell mdl-cell--2-col mdl-cell--hide-phone"></div>
       <div className="mdl-cell mdl-cell--4-col">
         <Paper style={styles.root} zDepth={2}>
+          <Logo /><br />
           <BellTeamSelector onChangeTeam={@onChangeTeam} /><br />
           <BellKeywords onChangeKeyword={@onChangeKeyword} /><br />
           <BellButton sendMessage={@sendMessage} />
