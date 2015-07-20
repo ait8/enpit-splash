@@ -26,5 +26,5 @@ module.exports = React.createClass
     <SelectField
       value={@state.selectValue}
       onChange={@onChange.bind(null, 'selectValue')}
-      hintText="Select Keyword..."
+      hintText="キーワードを選択"
       menuItems={@state.keywords} />

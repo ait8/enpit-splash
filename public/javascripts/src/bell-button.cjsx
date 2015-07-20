@@ -7,4 +7,4 @@ module.exports = React.createClass
   onClick: ->
     @props.sendMessage()
   render: ->
-    <RaisedButton onClick={@onClick} label="SEND" secondary={true} />
+    <RaisedButton onClick={@onClick} label="送信" primary={true} />

@@ -53,9 +53,9 @@ module.exports = React.createClass
       <div className="mdl-cell mdl-cell--2-col mdl-cell--hide-phone"></div>
       <div className="mdl-cell mdl-cell--4-col">
         <Paper style={styles.root} zDepth={2}>
-          <Logo /><br />
+          <Logo />
           <BellTeamSelector onChangeTeam={@onChangeTeam} /><br />
-          <BellKeywords onChangeKeyword={@onChangeKeyword} /><br />
+          <BellKeywords onChangeKeyword={@onChangeKeyword} /><br /><br />
           <BellButton sendMessage={@sendMessage} />
         </Paper>
       </div>
