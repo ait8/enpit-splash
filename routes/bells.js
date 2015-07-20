@@ -55,6 +55,11 @@ router.get('/', function(req, res, next) {
     console.log(body);
   });
 
+  var Keyword = require('../models/keywords');
+  Keyword.countUpKeyword(keywords, function() {}, function(err){
+    console.error(err);
+  });
+
   res.status(200).send({message: "Send Bell"});
 });
 
