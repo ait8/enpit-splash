@@ -1,9 +1,10 @@
 React = require 'react'
 Mui   = require 'material-ui'
 
-BellButton          = require './bell-button.cjsx'
-BellKeywordSelector = require './bell-keyword-selector.cjsx'
-BellTeamSelector    = require './bell-team-selector.cjsx'
+BellButtonSend       = require './bell-button-send.cjsx'
+BellKeywordSelector  = require './bell-keyword-selector.cjsx'
+BellTeamSelector     = require './bell-team-selector.cjsx'
+BellButtonAddKeyword = require './bell-button-add-keyword.cjsx'
 Logo                = require './logo.cjsx'
 
 Paper = Mui.Paper
@@ -46,6 +47,29 @@ module.exports = React.createClass
           swal '送信完了！', 'メンターにメッセージを送信しました。', 'success'
         error : (XMLHttpRequest, textStatus, errorThrown)->
           swal 'エラー！', '送信エラーです。', 'error'
+  addKeyword: ->
+    swal {
+      title: '新しくキーワードを追加'
+      text:  '追加したいキーワードを入力してください'
+      type:  'input'
+      showCancelButton: true
+      closeOnConfirm: false
+      animation: 'slide-from-top'
+      inputPlaceholder: 'キーワードを入力'
+    }, (inputValue)->
+      if inputValue is false
+        return false
+      if inputValue is ''
+        swal.showInputError 'キーワードを入力してください。'
+        return false
+      keyword = inputValue
+      newKeywords = that.state.keywords
+      newKeywords.push
+        'text': keyword
+      that.setState
+        keywords : newKeywords
+        selectValue: undefined
+      swal '送信完了！', 'キーワードを追加しました。', 'success'
   render: ->
     styles = @getStyles()
     <div className="mdl-grid">
@@ -56,7 +80,8 @@ module.exports = React.createClass
           <Logo />
           <BellTeamSelector onChangeTeam={@onChangeTeam} /><br />
           <BellKeywordSelector onChangeKeyword={@onChangeKeyword} /><br /><br />
-          <BellButton sendMessage={@sendMessage} />
+          <BellButtonSend sendMessage={@sendMessage} />&nbsp;
+          <BellButtonAddKeyword addKeyword={@addKeyword}/>
         </Paper>
       </div>
       <div className="mdl-cell mdl-cell--2-col mdl-cell--hide-phone"></div>

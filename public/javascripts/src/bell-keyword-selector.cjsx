@@ -9,33 +9,9 @@ module.exports = React.createClass
     keywords : []
     selectValue: undefined
   onChange: (e) ->
-    that = @
-    keyword = e.target.value.text
-    if keyword is '新しくキーワードを追加'
-      swal {
-        title: '新しくキーワードを追加'
-        text:  '追加したいキーワードを入力してください'
-        type:  'input'
-        showCancelButton: true
-        closeOnConfirm: false
-        animation: 'slide-from-top'
-        inputPlaceholder: 'キーワードを入力'
-      }, (inputValue)->
-        if inputValue is false
-          return false
-        if inputValue is ''
-          swal.showInputError 'キーワードを入力してください。'
-          return false
-        keyword = inputValue
-        newKeywords = that.state.keywords
-        newKeywords.push
-          'text': keyword
-        that.setState
-          keywords : newKeywords
-        swal '送信完了！', 'キーワードを追加しました。', 'success'
     @setState
       selectValue: e.target.value
-    @props.onChangeKeyword(keyword)
+    @props.onChangeKeyword(e.target.value.text)
   componentWillMount: ->
     that = @
     $.get './keywords', (data)->
@@ -43,8 +19,6 @@ module.exports = React.createClass
       for d in data
         newKeywords.push
           'text': d.text
-      newKeywords.push
-          'text': '新しくキーワードを追加'
       that.setState
         keywords : newKeywords
   render: ->
