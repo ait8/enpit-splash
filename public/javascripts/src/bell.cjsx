@@ -39,9 +39,8 @@ module.exports = React.createClass
     else if @state.keyword is ''
       swal 'エラー！', 'メッセージを選択して下さい。', 'error'
     else
+      team = _.findWhere @state.teams, {"id": @state.teamId}
       that = @
-      team = _.find that.state.teams, (obj)->
-        return obj.id is that.state.teamId
       $.ajax
         type : 'GET'
         url  : './bells'
