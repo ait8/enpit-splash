@@ -1,10 +1,10 @@
 React = require 'react'
 Mui   = require 'material-ui'
 
-BellKeywords     = require './bell-keywords.cjsx'
-BellButton       = require './bell-button.cjsx'
-BellTeamSelector = require './bell-team-selector.cjsx'
-Logo             = require './logo.cjsx'
+BellButton          = require './bell-button.cjsx'
+BellKeywordSelector = require './bell-keyword-selector.cjsx'
+BellTeamSelector    = require './bell-team-selector.cjsx'
+Logo                = require './logo.cjsx'
 
 Paper = Mui.Paper
 
@@ -55,7 +55,7 @@ module.exports = React.createClass
         <Paper style={styles.root} zDepth={2}>
           <Logo />
           <BellTeamSelector onChangeTeam={@onChangeTeam} /><br />
-          <BellKeywords onChangeKeyword={@onChangeKeyword} /><br /><br />
+          <BellKeywordSelector onChangeKeyword={@onChangeKeyword} /><br /><br />
           <BellButton sendMessage={@sendMessage} />
         </Paper>
       </div>
