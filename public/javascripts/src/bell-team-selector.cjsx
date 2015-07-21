@@ -4,14 +4,16 @@ Mui   = require 'material-ui'
 SelectField = Mui.SelectField
 
 module.exports = React.createClass
-  mixins: [React.addons.LinkedStateMixin]
   getInitialState: ->
-    selectValue: @props.team
+    selectValue: @props.teamid
   onChange: (e) ->
+    @setState
+      selectValue: e.target.value
     @props.onChangeTeam(e.target.value)
   render: ->
     <SelectField
-      valueLink={@linkState('selectValue')}
+      value={@state.selectValue}
+      onChange={@onChange}
       hintText="チーム名を選択"
       valueMember="id"
       displayMember="name"

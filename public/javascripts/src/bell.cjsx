@@ -14,7 +14,7 @@ ThemeManager = new Mui.Styles.ThemeManager()
 module.exports = React.createClass
   getInitialState: ->
     keyword  : ""
-    team     : undefined
+    team_id  : undefined
     keywords : []
     teams    : []
   getChildContext: ->
@@ -27,23 +27,27 @@ module.exports = React.createClass
       textAlign : "center"
       padding   : "16px"
   onChangeTeam: (t)->
+    localStorage.setItem 'team_id', t
     @setState
-      team: t.name
+      team_id: t
   onChangeKeyword: (k)->
     @setState
       keyword: k
   sendMessage: ->
-    if @state.team is undefined
+    if @state.team_id is undefined
       swal 'エラー！', 'チーム名を選択して下さい。', 'error'
     else if @state.keyword is ''
       swal 'エラー！', 'メッセージを選択して下さい。', 'error'
     else
+      that = @
+      team = _.find that.state.teams, (obj)->
+        return obj.id is that.state.team_id
       $.ajax
         type : 'GET'
         url  : './bells'
         data :
           keywords : @state.keyword
-          team     : @state.team.name
+          team     : team.name
         success : (data, dataType)->
           swal '送信完了！', 'メンターにメッセージを送信しました。', 'success'
         error : (XMLHttpRequest, textStatus, errorThrown)->
@@ -90,8 +94,10 @@ module.exports = React.createClass
     $.get './teams', (data)->
       that.setState
         teams: data
-    that.setState
-      team: 2
+    current_team_id = localStorage.getItem 'team_id'
+    unless current_team_id is null
+      that.setState
+        team_id: parseInt current_team_id
   render: ->
     styles = @getStyles()
     <div className="mdl-grid">
@@ -100,7 +106,7 @@ module.exports = React.createClass
       <div className="mdl-cell mdl-cell--4-col">
         <Paper style={styles.root} zDepth={2}>
           <Logo />
-          <BellTeamSelector team={@state.team} teams={@state.teams} onChangeTeam={@onChangeTeam} /><br />
+          <BellTeamSelector teamid={@state.team_id} teams={@state.teams} onChangeTeam={@onChangeTeam} /><br />
           <BellKeywordSelector keywords={@state.keywords} onChangeKeyword={@onChangeKeyword} /><br /><br />
           <BellButtonSend sendMessage={@sendMessage} />&nbsp;
           <BellButtonAddKeyword addKeyword={@addKeyword}/>
