@@ -12,15 +12,15 @@ Paper = Mui.Paper
 ThemeManager = new Mui.Styles.ThemeManager()
 
 module.exports = React.createClass
+  childContextTypes:
+    muiTheme: React.PropTypes.object
   getInitialState: ->
     keyword  : ""
-    teamId  : undefined
+    teamId   : undefined
     keywords : []
     teams    : []
   getChildContext: ->
     muiTheme: ThemeManager.getCurrentTheme()
-  childContextTypes:
-    muiTheme: React.PropTypes.object
   getStyles: ->
     root:
       margin    : "0 auto"
