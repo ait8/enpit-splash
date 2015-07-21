@@ -15,6 +15,8 @@ module.exports = React.createClass
   getInitialState: ->
     keyword: ""
     team: ""
+    keywords: []
+    teams: []
     selectedTeam: undefined
   getChildContext: ->
     muiTheme : ThemeManager.getCurrentTheme()
@@ -70,6 +72,22 @@ module.exports = React.createClass
         keywords : newKeywords
         selectValue: undefined
       swal '送信完了！', 'キーワードを追加しました。', 'success'
+  componentWillMount: ->
+    that = @
+    $.get './keywords', (data)->
+      newKeywords = []
+      for d in data
+        newKeywords.push
+          'text': d.text
+      that.setState
+        keywords : newKeywords
+    $.get './teams', (data)->
+      newTeams = []
+      for d in data
+        newTeams.push
+          'text': d.text
+      that.setState
+        teams : newTeams
   render: ->
     styles = @getStyles()
     <div className="mdl-grid">
@@ -78,8 +96,8 @@ module.exports = React.createClass
       <div className="mdl-cell mdl-cell--4-col">
         <Paper style={styles.root} zDepth={2}>
           <Logo />
-          <BellTeamSelector onChangeTeam={@onChangeTeam} /><br />
-          <BellKeywordSelector onChangeKeyword={@onChangeKeyword} /><br /><br />
+          <BellTeamSelector teams={@state.teams} onChangeTeam={@onChangeTeam} /><br />
+          <BellKeywordSelector keywords={@state.keywords} onChangeKeyword={@onChangeKeyword} /><br /><br />
           <BellButtonSend sendMessage={@sendMessage} />&nbsp;
           <BellButtonAddKeyword addKeyword={@addKeyword}/>
         </Paper>
