@@ -1,10 +1,10 @@
-gulp     = require 'gulp'
+gulp       = require 'gulp'
 
 browserify = require 'browserify'
 reactify   = require 'coffee-reactify'
-source   = require 'vinyl-source-stream'
-buffer   = require 'vinyl-buffer'
-uglify   = require 'gulp-uglify'
+source     = require 'vinyl-source-stream'
+buffer     = require 'vinyl-buffer'
+uglify     = require 'gulp-uglify'
 
 gulp.task 'js', ->
   browserify './public/javascripts/src/main.cjsx'
