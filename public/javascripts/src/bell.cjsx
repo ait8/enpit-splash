@@ -32,9 +32,9 @@ module.exports = React.createClass
       keyword: k
   sendMessage: ->
     if @state.team is ''
-      swal('エラー！', 'チーム名を選択して下さい。', 'error')
+      swal 'エラー！', 'チーム名を選択して下さい。', 'error'
     else if @state.keyword is ''
-      swal('エラー！', 'メッセージを選択して下さい。', 'error')
+      swal 'エラー！', 'メッセージを選択して下さい。', 'error'
     else
       $.ajax
         type : 'GET'
@@ -43,9 +43,9 @@ module.exports = React.createClass
           keywords : @state.keyword,
           team : @state.team
         success : (data, dataType)->
-          swal('送信完了！', 'メンターにメッセージを送信しました。', 'success')
+          swal '送信完了！', 'メンターにメッセージを送信しました。', 'success'
         error : (XMLHttpRequest, textStatus, errorThrown)->
-          swal('エラー！', '送信エラーです。', 'error')
+          swal 'エラー！', '送信エラーです。', 'error'
   render: ->
     styles = @getStyles()
     <div className="mdl-grid">
