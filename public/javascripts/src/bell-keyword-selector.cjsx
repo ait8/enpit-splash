@@ -10,10 +10,10 @@ module.exports = React.createClass
   onChange: (e) ->
     @setState
       selectValue: e.target.value
-    @props.onChangeTeam(e.target.value.text)
+    @props.onChangeKeyword(e.target.value.text)
   render: ->
     <SelectField
       value={@state.selectValue}
       onChange={@onChange}
-      hintText="チーム名を選択"
-      menuItems={@props.teams} />
+      hintText="キーワードを選択"
+      menuItems={@props.keywords} />
