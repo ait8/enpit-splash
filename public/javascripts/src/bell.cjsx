@@ -50,6 +50,7 @@ module.exports = React.createClass
         error : (XMLHttpRequest, textStatus, errorThrown)->
           swal 'エラー！', '送信エラーです。', 'error'
   addKeyword: ->
+    that = @
     swal {
       title: '新しくキーワードを追加'
       text:  '追加したいキーワードを入力してください'
@@ -70,7 +71,6 @@ module.exports = React.createClass
         'text': keyword
       that.setState
         keywords : newKeywords
-        selectValue: undefined
       swal '送信完了！', 'キーワードを追加しました。', 'success'
   componentWillMount: ->
     that = @
