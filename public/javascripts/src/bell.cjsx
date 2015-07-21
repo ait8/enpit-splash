@@ -14,7 +14,7 @@ ThemeManager = new Mui.Styles.ThemeManager()
 module.exports = React.createClass
   getInitialState: ->
     keyword  : ""
-    team     : ""
+    team     : undefined
     keywords : []
     teams    : []
   getChildContext: ->
@@ -28,12 +28,12 @@ module.exports = React.createClass
       padding   : "16px"
   onChangeTeam: (t)->
     @setState
-      team: t
+      team: t.name
   onChangeKeyword: (k)->
     @setState
       keyword: k
   sendMessage: ->
-    if @state.team is ''
+    if @state.team is undefined
       swal 'エラー！', 'チーム名を選択して下さい。', 'error'
     else if @state.keyword is ''
       swal 'エラー！', 'メッセージを選択して下さい。', 'error'
@@ -43,7 +43,7 @@ module.exports = React.createClass
         url  : './bells'
         data :
           keywords : @state.keyword
-          team     : @state.team
+          team     : @state.team.name
         success : (data, dataType)->
           swal '送信完了！', 'メンターにメッセージを送信しました。', 'success'
         error : (XMLHttpRequest, textStatus, errorThrown)->
@@ -88,12 +88,10 @@ module.exports = React.createClass
       that.setState
         keywords: newKeywords
     $.get './teams', (data)->
-      newTeams = []
-      for d in data
-        newTeams.push
-          'text': d.text
       that.setState
-        teams: newTeams
+        teams: data
+    that.setState
+      team: 2
   render: ->
     styles = @getStyles()
     <div className="mdl-grid">
@@ -102,7 +100,7 @@ module.exports = React.createClass
       <div className="mdl-cell mdl-cell--4-col">
         <Paper style={styles.root} zDepth={2}>
           <Logo />
-          <BellTeamSelector teams={@state.teams} onChangeTeam={@onChangeTeam} /><br />
+          <BellTeamSelector team={@state.team} teams={@state.teams} onChangeTeam={@onChangeTeam} /><br />
           <BellKeywordSelector keywords={@state.keywords} onChangeKeyword={@onChangeKeyword} /><br /><br />
           <BellButtonSend sendMessage={@sendMessage} />&nbsp;
           <BellButtonAddKeyword addKeyword={@addKeyword}/>
