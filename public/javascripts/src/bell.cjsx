@@ -75,7 +75,7 @@ module.exports = React.createClass
             'text': inputValue
           that.setState
             keywords: newKeywords
-            swal '送信完了！', 'キーワードを追加しました。', 'success'
+          swal '送信完了！', 'キーワードを追加しました。', 'success'
         error : (XMLHttpRequest, textStatus, errorThrown)->
           swal 'エラー！', '送信エラーです。', 'error'
   componentWillMount: ->
