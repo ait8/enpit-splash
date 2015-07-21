@@ -76,7 +76,8 @@ module.exports = React.createClass
           that.setState
             keywords: newKeywords
             swal '送信完了！', 'キーワードを追加しました。', 'success'
-        swal 'エラー！', '送信エラーです。', 'error'
+        error : (XMLHttpRequest, textStatus, errorThrown)->
+          swal 'エラー！', '送信エラーです。', 'error'
   componentWillMount: ->
     that = @
     $.get './keywords', (data)->
