@@ -4,16 +4,17 @@ Mui   = require 'material-ui'
 SelectField = Mui.SelectField
 
 module.exports = React.createClass
-  mixins: [React.addons.LinkedStateMixin]
   getInitialState: ->
     selectValue: undefined
   onChange: (e) ->
     @setState
       selectValue: e.target.value
-    @props.onChangeKeyword(e.target.value.text)
+    @props.onChangeKeyword(e.target.value)
   render: ->
     <SelectField
       value={@state.selectValue}
       onChange={@onChange}
       hintText="キーワードを選択"
+      valueMember="text"
+      displayMember="text"
       menuItems={@props.keywords} />

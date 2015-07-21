@@ -1,11 +1,11 @@
 React = require 'react'
 Mui   = require 'material-ui'
 
-BellButtonSend       = require './bell-button-send.cjsx'
-BellKeywordSelector  = require './bell-keyword-selector.cjsx'
-BellTeamSelector     = require './bell-team-selector.cjsx'
-BellButtonAddKeyword = require './bell-button-add-keyword.cjsx'
 Logo                 = require './logo.cjsx'
+BellTeamSelector     = require './bell-team-selector.cjsx'
+BellKeywordSelector  = require './bell-keyword-selector.cjsx'
+BellButtonAddKeyword = require './bell-button-add-keyword.cjsx'
+BellButtonSend       = require './bell-button-send.cjsx'
 
 Paper = Mui.Paper
 
@@ -34,13 +34,12 @@ module.exports = React.createClass
     @setState
       keyword: k
   sendMessage: ->
-    if @state.teamId is undefined
+    if !@state.teamId?
       swal 'エラー！', 'チーム名を選択して下さい。', 'error'
     else if @state.keyword is ''
       swal 'エラー！', 'メッセージを選択して下さい。', 'error'
     else
       team = _.findWhere @state.teams, {"id": @state.teamId}
-      that = @
       $.ajax
         type : 'GET'
         url  : './bells'
@@ -73,28 +72,21 @@ module.exports = React.createClass
         data :
           keyword: inputValue
         success : (data, dataType)->
-          newKeywords = that.state.keywords
-          newKeywords.push
+          that.state.keywords.push
             'text': inputValue
-          that.setState
-            keywords: newKeywords
           swal '送信完了！', 'キーワードを追加しました。', 'success'
         error : (XMLHttpRequest, textStatus, errorThrown)->
           swal 'エラー！', '送信エラーです。', 'error'
   componentWillMount: ->
     that = @
     $.get './keywords', (data)->
-      newKeywords = []
-      for d in data
-        newKeywords.push
-          'text': d.text
       that.setState
-        keywords: newKeywords
+        keywords: data
     $.get './teams', (data)->
       that.setState
         teams: data
     currentTeamId = localStorage.getItem 'teamId'
-    unless currentTeamId is null
+    if currentTeamId?
       that.setState
         teamId: parseInt currentTeamId
   render: ->
