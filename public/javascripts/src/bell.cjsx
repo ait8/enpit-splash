@@ -5,7 +5,7 @@ BellButtonSend       = require './bell-button-send.cjsx'
 BellKeywordSelector  = require './bell-keyword-selector.cjsx'
 BellTeamSelector     = require './bell-team-selector.cjsx'
 BellButtonAddKeyword = require './bell-button-add-keyword.cjsx'
-Logo                = require './logo.cjsx'
+Logo                 = require './logo.cjsx'
 
 Paper = Mui.Paper
 
@@ -13,20 +13,19 @@ ThemeManager = new Mui.Styles.ThemeManager()
 
 module.exports = React.createClass
   getInitialState: ->
-    keyword: ""
-    team: ""
-    keywords: []
-    teams: []
-    selectedTeam: undefined
+    keyword  : ""
+    team     : ""
+    keywords : []
+    teams    : []
   getChildContext: ->
-    muiTheme : ThemeManager.getCurrentTheme()
+    muiTheme: ThemeManager.getCurrentTheme()
   childContextTypes:
-    muiTheme : React.PropTypes.object
+    muiTheme: React.PropTypes.object
   getStyles: ->
     root:
-      margin: "0 auto"
-      textAlign: "center"
-      padding: "16px"
+      margin    : "0 auto"
+      textAlign : "center"
+      padding   : "16px"
   onChangeTeam: (t)->
     @setState
       team: t
@@ -43,8 +42,8 @@ module.exports = React.createClass
         type : 'GET'
         url  : './bells'
         data :
-          keywords : @state.keyword,
-          team : @state.team
+          keywords : @state.keyword
+          team     : @state.team
         success : (data, dataType)->
           swal '送信完了！', 'メンターにメッセージを送信しました。', 'success'
         error : (XMLHttpRequest, textStatus, errorThrown)->
@@ -52,26 +51,32 @@ module.exports = React.createClass
   addKeyword: ->
     that = @
     swal {
-      title: '新しくキーワードを追加'
-      text:  '追加したいキーワードを入力してください'
-      type:  'input'
-      showCancelButton: true
-      closeOnConfirm: false
-      animation: 'slide-from-top'
-      inputPlaceholder: 'キーワードを入力'
+      title : '新しくキーワードを追加'
+      text  : '追加したいキーワードを入力してください。'
+      type  : 'input'
+      showCancelButton : true
+      closeOnConfirm   : false
+      animation        : 'slide-from-top'
+      inputPlaceholder : 'キーワードを入力'
     }, (inputValue)->
       if inputValue is false
         return false
       if inputValue is ''
         swal.showInputError 'キーワードを入力してください。'
         return false
-      keyword = inputValue
-      newKeywords = that.state.keywords
-      newKeywords.push
-        'text': keyword
-      that.setState
-        keywords : newKeywords
-      swal '送信完了！', 'キーワードを追加しました。', 'success'
+      $.ajax
+        type : 'POST'
+        url  : './keywords'
+        data :
+          keyword: inputValue
+        success : (data, dataType)->
+          newKeywords = that.state.keywords
+          newKeywords.push
+            'text': inputValue
+          that.setState
+            keywords: newKeywords
+            swal '送信完了！', 'キーワードを追加しました。', 'success'
+        swal 'エラー！', '送信エラーです。', 'error'
   componentWillMount: ->
     that = @
     $.get './keywords', (data)->
@@ -80,14 +85,14 @@ module.exports = React.createClass
         newKeywords.push
           'text': d.text
       that.setState
-        keywords : newKeywords
+        keywords: newKeywords
     $.get './teams', (data)->
       newTeams = []
       for d in data
         newTeams.push
           'text': d.text
       that.setState
-        teams : newTeams
+        teams: newTeams
   render: ->
     styles = @getStyles()
     <div className="mdl-grid">
