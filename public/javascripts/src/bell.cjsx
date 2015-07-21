@@ -14,7 +14,7 @@ ThemeManager = new Mui.Styles.ThemeManager()
 module.exports = React.createClass
   getInitialState: ->
     keyword  : ""
-    team_id  : undefined
+    teamId  : undefined
     keywords : []
     teams    : []
   getChildContext: ->
@@ -27,21 +27,21 @@ module.exports = React.createClass
       textAlign : "center"
       padding   : "16px"
   onChangeTeam: (t)->
-    localStorage.setItem 'team_id', t
+    localStorage.setItem 'teamId', t
     @setState
-      team_id: t
+      teamId: t
   onChangeKeyword: (k)->
     @setState
       keyword: k
   sendMessage: ->
-    if @state.team_id is undefined
+    if @state.teamId is undefined
       swal 'エラー！', 'チーム名を選択して下さい。', 'error'
     else if @state.keyword is ''
       swal 'エラー！', 'メッセージを選択して下さい。', 'error'
     else
       that = @
       team = _.find that.state.teams, (obj)->
-        return obj.id is that.state.team_id
+        return obj.id is that.state.teamId
       $.ajax
         type : 'GET'
         url  : './bells'
@@ -94,10 +94,10 @@ module.exports = React.createClass
     $.get './teams', (data)->
       that.setState
         teams: data
-    current_team_id = localStorage.getItem 'team_id'
-    unless current_team_id is null
+    currentTeamId = localStorage.getItem 'teamId'
+    unless currentTeamId is null
       that.setState
-        team_id: parseInt current_team_id
+        teamId: parseInt currentTeamId
   render: ->
     styles = @getStyles()
     <div className="mdl-grid">
@@ -106,7 +106,7 @@ module.exports = React.createClass
       <div className="mdl-cell mdl-cell--4-col">
         <Paper style={styles.root} zDepth={2}>
           <Logo />
-          <BellTeamSelector teamid={@state.team_id} teams={@state.teams} onChangeTeam={@onChangeTeam} /><br />
+          <BellTeamSelector teamId={@state.teamId} teams={@state.teams} onChangeTeam={@onChangeTeam} /><br />
           <BellKeywordSelector keywords={@state.keywords} onChangeKeyword={@onChangeKeyword} /><br /><br />
           <BellButtonSend sendMessage={@sendMessage} />&nbsp;
           <BellButtonAddKeyword addKeyword={@addKeyword}/>

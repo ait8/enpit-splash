@@ -5,7 +5,7 @@ SelectField = Mui.SelectField
 
 module.exports = React.createClass
   getInitialState: ->
-    selectValue: @props.teamid
+    selectValue: @props.teamId
   onChange: (e) ->
     @setState
       selectValue: e.target.value
