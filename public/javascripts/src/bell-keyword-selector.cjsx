@@ -8,7 +8,7 @@ module.exports = React.createClass
   getInitialState: ->
     keywords : []
     selectValue: undefined
-  onChange: (name, e) ->
+  onChange: (e) ->
     that = @
     keyword = e.target.value.text
     if keyword is '新しくキーワードを追加'
@@ -33,9 +33,8 @@ module.exports = React.createClass
         that.setState
           keywords : newKeywords
         swal '送信完了！', 'キーワードを追加しました。', 'success'
-    change = {}
-    change[name] = e.target.value
-    @setState change
+    @setState
+      selectValue: e.target.value
     @props.onChangeKeyword(keyword)
   componentWillMount: ->
     that = @
@@ -51,6 +50,6 @@ module.exports = React.createClass
   render: ->
     <SelectField
       value={@state.selectValue}
-      onChange={@onChange.bind(null, 'selectValue')}
+      onChange={@onChange}
       hintText="キーワードを選択"
       menuItems={@state.keywords} />

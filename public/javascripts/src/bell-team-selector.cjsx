@@ -8,10 +8,9 @@ module.exports = React.createClass
   getInitialState: ->
     teams : []
     selectValue: undefined
-  onChange: (name, e) ->
-    change = {}
-    change[name] = e.target.value
-    @setState change
+  onChange: (e) ->
+    @setState
+      selectValue: e.target.value
     @props.onChangeTeam(e.target.value.text)
   componentWillMount: ->
     that = @
@@ -21,6 +20,6 @@ module.exports = React.createClass
   render: ->
     <SelectField
       value={@state.selectValue}
-      onChange={@onChange.bind(null, 'selectValue')}
+      onChange={@onChange}
       hintText="チーム名を選択"
       menuItems={@state.teams} />
