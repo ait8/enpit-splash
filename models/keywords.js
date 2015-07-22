@@ -29,7 +29,8 @@ var Keyword = (function() {
         fail(err, result);
         return;
       }
-      if (result.length !== 0) {
+      console.log(result);
+      if (result && result.length !== 0) {
         fail({status: 400, message: "キーワードが存在しています"});
         return;
       }
