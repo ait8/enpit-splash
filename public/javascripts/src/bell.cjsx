@@ -53,13 +53,17 @@ module.exports = React.createClass
   addKeyword: ->
     that = @
     swal {
+      html  : true
       title : '新しくキーワードを追加'
-      text  : '追加したいキーワードを入力してください。'
+      text  : '
+        新しく追加したいキーワードを入力してください。<br />
+        <strong>※ キーワードは全チームで共有されます。</strong><br />
+        <strong>※ 追加した時点ではメンターには送信されません。</strong>'
       type  : 'input'
       showCancelButton : true
       closeOnConfirm   : false
       animation        : 'slide-from-top'
-      inputPlaceholder : 'キーワードを入力'
+      inputPlaceholder : '新しいキーワードを入力'
     }, (inputValue)->
       if inputValue is false
         return false
@@ -74,7 +78,7 @@ module.exports = React.createClass
         success : (data, dataType)->
           that.state.keywords.push
             'text': inputValue
-          swal '送信完了！', 'キーワードを追加しました。', 'success'
+          swal '追加完了！', 'キーワードを追加しました。', 'success'
         error : (XMLHttpRequest, textStatus, errorThrown)->
           swal 'エラー！', '送信エラーです。', 'error'
   componentWillMount: ->
