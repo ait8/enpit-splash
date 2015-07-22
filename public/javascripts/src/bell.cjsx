@@ -48,8 +48,8 @@ module.exports = React.createClass
           team     : team.name
         success : (data, dataType)->
           swal '送信完了！', 'メンターにメッセージを送信しました。', 'success'
-        error : (XMLHttpRequest, textStatus, errorThrown)->
-          swal 'エラー！', '送信エラーです。', 'error'
+        error : (xhr, textStatus, errorThrown)->
+          swal 'エラー！', JSON.parse(xhr.responseText).message, 'error'
   addKeyword: ->
     that = @
     swal {
@@ -79,8 +79,8 @@ module.exports = React.createClass
           that.state.keywords.push
             'text': inputValue
           swal '追加完了！', 'キーワードを追加しました。', 'success'
-        error : (XMLHttpRequest, textStatus, errorThrown)->
-          swal 'エラー！', '送信エラーです。', 'error'
+        error : (xhr, textStatus, errorThrown)->
+          swal 'エラー！', JSON.parse(xhr.responseText).message, 'error'
   componentWillMount: ->
     that = @
     $.get './keywords', (data)->
