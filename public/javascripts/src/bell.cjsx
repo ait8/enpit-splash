@@ -1,49 +1,51 @@
 React = require 'react'
 Mui   = require 'material-ui'
 
-BellButtonSend       = require './bell-button-send.cjsx'
-BellKeywordSelector  = require './bell-keyword-selector.cjsx'
-BellTeamSelector     = require './bell-team-selector.cjsx'
-BellButtonAddKeyword = require './bell-button-add-keyword.cjsx'
 Logo                 = require './logo.cjsx'
+BellTeamSelector     = require './bell-team-selector.cjsx'
+BellKeywordSelector  = require './bell-keyword-selector.cjsx'
+BellButtonAddKeyword = require './bell-button-add-keyword.cjsx'
+BellButtonSend       = require './bell-button-send.cjsx'
 
 Paper = Mui.Paper
 
 ThemeManager = new Mui.Styles.ThemeManager()
 
 module.exports = React.createClass
+  childContextTypes:
+    muiTheme: React.PropTypes.object
   getInitialState: ->
     keyword  : ""
-    team     : ""
+    teamId   : undefined
     keywords : []
     teams    : []
   getChildContext: ->
     muiTheme: ThemeManager.getCurrentTheme()
-  childContextTypes:
-    muiTheme: React.PropTypes.object
   getStyles: ->
     root:
       margin    : "0 auto"
       textAlign : "center"
       padding   : "16px"
   onChangeTeam: (t)->
+    localStorage.setItem 'teamId', t
     @setState
-      team: t
+      teamId: t
   onChangeKeyword: (k)->
     @setState
       keyword: k
   sendMessage: ->
-    if @state.team is ''
+    if !@state.teamId?
       swal 'エラー！', 'チーム名を選択して下さい。', 'error'
     else if @state.keyword is ''
       swal 'エラー！', 'メッセージを選択して下さい。', 'error'
     else
+      team = _.findWhere @state.teams, {"id": @state.teamId}
       $.ajax
         type : 'GET'
         url  : './bells'
         data :
           keywords : @state.keyword
-          team     : @state.team
+          team     : team.name
         success : (data, dataType)->
           swal '送信完了！', 'メンターにメッセージを送信しました。', 'success'
         error : (XMLHttpRequest, textStatus, errorThrown)->
@@ -70,30 +72,23 @@ module.exports = React.createClass
         data :
           keyword: inputValue
         success : (data, dataType)->
-          newKeywords = that.state.keywords
-          newKeywords.push
+          that.state.keywords.push
             'text': inputValue
-          that.setState
-            keywords: newKeywords
           swal '送信完了！', 'キーワードを追加しました。', 'success'
         error : (XMLHttpRequest, textStatus, errorThrown)->
           swal 'エラー！', '送信エラーです。', 'error'
   componentWillMount: ->
     that = @
     $.get './keywords', (data)->
-      newKeywords = []
-      for d in data
-        newKeywords.push
-          'text': d.text
       that.setState
-        keywords: newKeywords
+        keywords: data
     $.get './teams', (data)->
-      newTeams = []
-      for d in data
-        newTeams.push
-          'text': d.text
       that.setState
-        teams: newTeams
+        teams: data
+    currentTeamId = localStorage.getItem 'teamId'
+    if currentTeamId?
+      that.setState
+        teamId: parseInt currentTeamId
   render: ->
     styles = @getStyles()
     <div className="mdl-grid">
@@ -102,7 +97,7 @@ module.exports = React.createClass
       <div className="mdl-cell mdl-cell--4-col">
         <Paper style={styles.root} zDepth={2}>
           <Logo />
-          <BellTeamSelector teams={@state.teams} onChangeTeam={@onChangeTeam} /><br />
+          <BellTeamSelector teamId={@state.teamId} teams={@state.teams} onChangeTeam={@onChangeTeam} /><br />
           <BellKeywordSelector keywords={@state.keywords} onChangeKeyword={@onChangeKeyword} /><br /><br />
           <BellButtonSend sendMessage={@sendMessage} />&nbsp;
           <BellButtonAddKeyword addKeyword={@addKeyword}/>
