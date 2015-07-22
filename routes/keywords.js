@@ -24,8 +24,8 @@ router.post('/', function(req, res, next) {
     function() {
       res.status('201').send({});
     }, function(err) {
-      console.error(err);
-      res.status('500').send({message: "サーバの内部エラーです"});
+      console.error(err.message);
+      res.status(err.status).send({message: err.message});
     });
 });
 

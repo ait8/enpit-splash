@@ -23,16 +23,29 @@ var Keyword = (function() {
   };
 
   _Keyword.addKeyword = function(keyword, success, fail) {
-    if (!keyword.send_count) {
-      keyword.send_count = 0;
-    }
-    var newKeyword = new KeywordModel(keyword);
-    newKeyword.save(function(err) {
+    var keywordsQuery = KeywordModel.where({ text: keyword.text});
+    keywordsQuery.findOne().lean().exec(function(err, result) {
       if (err) {
-        fail(err);
+        fail(err, result);
         return;
       }
-      success();
+      console.log(result);
+      if (result && result.length !== 0) {
+        fail({status: 400, message: "キーワードが存在しています"});
+        return;
+      }
+
+      if (!keyword.send_count) {
+        keyword.send_count = 0;
+      }
+      var newKeyword = new KeywordModel(keyword);
+      newKeyword.save(function(err) {
+        if (err) {
+          fail({status: 500, message: err});
+          return;
+        }
+        success();
+      });
     });
   };
 
