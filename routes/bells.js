@@ -30,7 +30,7 @@ router.get('/', function(req, res, next) {
       var device = new apns.Device(token.token);
       var note = new apns.Notification();
       note.alert = message;
-      note.payload = {keyword: keywords, team: "Test team"};
+      note.payload = {keyword: keywords, team: team};
       apnConnection.pushNotification(note, device);
     });
   }, function(err, result){
