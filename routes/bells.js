@@ -60,6 +60,11 @@ router.get('/', function(req, res, next) {
     console.error(err);
   });
 
+  var Log = require('../models/logs');
+  Log.addLog(team, keywords, function() {}, function(err){
+    console.error(err);
+  });
+
   res.status(200).send({message: "Send Bell"});
 });
 
